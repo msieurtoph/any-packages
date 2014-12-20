@@ -1,3 +1,5 @@
+[![Build Status](http://img.shields.io/travis/msieurtoph/any-packages.svg)](https://travis-ci.org/msieurtoph/any-packages)
+
 any-packages
 ============
 

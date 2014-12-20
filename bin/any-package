@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+
+'use strict';
+
+function splitParams(params){
+    var parsedParams = nopt(knownOpts, shortOpts, params || process.argv.slice(2), 0),
+        args = parsedParams.argv.remain;
+
+    delete parsedParams.argv;
+    return  {
+        args: args,
+        opts: parsedParams
+    };
+}
+
+var knownOpts = {
+        cache: Boolean,
+        force: Boolean,
+        pkg: Boolean,
+        git: Boolean
+    },
+    shortOpts = {
+        c: ['--cache'],
+        C: ['--no-cache'],
+        f: ['--force'],
+        F: ['--no-force'],
+        p: ['--pkg'],
+        P: ['--no-pkg'],
+        g: ['--git'],
+        G: ['--no-git']
+    },
+    nopt = require('nopt'),
+    params = splitParams()
+;
+
+require('../cli.js').run(params.args, params.opts)
