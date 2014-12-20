@@ -1,0 +1,63 @@
+{
+  "name": "any-packages",
+  "version": "0.1.0",
+  "description": "Makes npm install any packages that have no package.json. Works with any github repos or archives.",
+  "main": "cli.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "bin": {
+    "any-package": "./bin/any-package"
+  },
+  "homepage": "https://github.com/msieurtoph/any-packages",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/msieurtoph/any-packages.git"
+  },
+  "keywords": [
+    "npm",
+    "install",
+    "module",
+    "without",
+    "package.json"
+  ],
+  "author": {
+    "name": "msieurtoph",
+    "email": "chr.pot@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/msieurtoph/any-packages/issues"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-jasmine-node": "^0.2.1",
+    "grunt-newer": "^0.8.0",
+    "jshint-stylish": "^1.0.0",
+    "load-grunt-tasks": "^1.0.0",
+    "time-grunt": "^1.0.0"
+  },
+  "dependencies": {
+    "download": "^3.2.0",
+    "merge": "^1.2.0",
+    "mkdirp": "^0.5.0",
+    "nopt": "^3.0.1",
+    "npm-cache-filename": "^1.0.1",
+    "npmlog": "^0.1.1",
+    "rimraf": "^2.2.8",
+    "slash": "^1.0.0",
+    "tar-pack": "^2.0.0",
+    "url-parse": "^0.2.2"
+  },
+  "any-packages": {
+    "invalid": "user/repo",
+    "invalid2": "http://domain.com/invalid/package",
+    "url-parse2": "unshiftio/url-parse",
+    "url-parse3": "unshiftio/url-parse#0.2.1",
+    "url-parse4": "http://github.com/unshiftio/url-parse/archive/0.2.2.zip",
+    "angular-bootstrap": "angular-ui/bootstrap-bower"
+  }
+}
