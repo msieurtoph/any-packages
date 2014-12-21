@@ -16,7 +16,7 @@ Note: It also works if the distant package has a package.json. But doing that do
 
 ### Installation
 
-`npm install any-packages`
+`npm install any-packages --save-dev`
 
 ### Usage
 
