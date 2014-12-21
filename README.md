@@ -90,7 +90,7 @@ any.run(args, opts, callback);
 * `--cache / --no-cache` : use cache (if present) or not. _Default: `--cache / true`_
 * `--force / --no-force` : force download or not, even if the package is already present in cache. _Default: `--no-force / false`_
 * `--pkg / --no-pkg` : use the package.json configuration or not. Useless in package.json usage, but usefull in scripting mode or in command-line. If `false`, the `any-packages` property of the package.json is ignored and the only the passed arguments will be used. _Default: `--pkg / true`_
-* `--test / --no-test` : really download and write to disk or not. By-pass the download phase during test. _Default: `--no-test / false`_
+* `--test / --no-test` : download and write to disk or not. If `true`, it by-pass the real download phase, processing only outputs. _Default: `--no-test / false`_
 
 In scripting mode:
 ```javascript
@@ -109,14 +109,14 @@ The callback function could only be used in the scripting mode. It has only one 
 Package object provides this API : 
 
 * `name`: name of the package,
-* `url`: url used,
+* `url`: url used to download the archive,
 * `version`: version or the package (if provided),
 * `opts`: options used during the installation,
 * `installMethod`: `download` or `cache`, method used to install the package,
 * `installTo`: path where the package should be installed to,
 * `cacheTo`: path where the package should be cached to,
-* `installed`: is the package installed or not in `installTo` path,
-* `cached`: is the package cached or not in `cacheTo` path (always `false` if `opts.cache=false`),
+* `installed`: is the package installed or not in `installTo` path?
+* `cached`: is the package cached or not in `cacheTo` path (always `false` if `opts.cache=false`)?
 
 See this full example:
 ```javascript
@@ -155,21 +155,21 @@ info downloading https://github.com/angular-ui/bootstrap-bower/archive/master.zi
 info done http://github.com/unshiftio/url-parse/archive/0.2.2.zip
 info done https://github.com/angular-ui/bootstrap-bower/archive/master.zip
 -------------
-The package angular-bootstrap has been processing.
+The package angular-bootstrap has been processed.
 Url:  https://github.com/angular-ui/bootstrap-bower/archive/master.zip
 Version: undefined
 Installed in <fullpath_to>\node_modules\angular-bootstrap : true
 Cached in <fullpath_to>\cache\github.com\angular-ui\bootstrap-bower\archive\master.zip : true
 Installation method: download
 -------------
-The package url-parse has been processing.
+The package url-parse has been processed.
 Url:  http://github.com/unshiftio/url-parse/archive/0.2.2.zip
 Version: undefined
 Installed in <fullpath_to>\node_modules\url-parse : true
 Cached in <fullpath_to>\cache\github.com\unshiftio\url-parse\archive\0.2.2.zip : true
 Installation method: download
 -------------
-The package invalid_package has been processing.
+The package invalid_package has been processed.
 Url:  http://invalid.url/package
 Version: undefined
 Installed in <fullpath_to>\node_modules\invalid_package : false
