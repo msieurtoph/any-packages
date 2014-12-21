@@ -269,7 +269,7 @@ describe('Package object', function(){
         });
     });
 
-    it('should download if version differs', function(done){
+    it('should download if url differs', function(done){
         pkg.url = url2;
 
         pkg.install(function(err){

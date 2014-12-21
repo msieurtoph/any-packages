@@ -1,6 +1,6 @@
 {
   "name": "any-packages",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Makes npm install any packages that have no package.json. Works with any github repos or archives.",
   "main": "cli.js",
   "scripts": {
@@ -29,7 +29,6 @@
   "bugs": {
     "url": "https://github.com/msieurtoph/any-packages/issues"
   },
-
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
