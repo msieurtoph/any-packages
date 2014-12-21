@@ -10,7 +10,7 @@ Makes npm install any kind of archives into the `node_modules/` folder. Works al
 Sometimes usefull github repos have no package.json. So NPM cannot install them. 
 For instance, https://github.com/angular-ui/bootstrap-bower only provides a bower.json and no package.json. If you do not use bower, you are stuck.
 
-Inspired by the really good [napa](https://github.com/shama/napa) package, [any-packages](https://github.com/msieurtoph/any-packages) lets NPM install any package, from any given url (or any github  repo), without needing a distant package.json. The package will be available in the `node_modules/` folder.
+Inspired by the really good **[shama/napa](https://github.com/shama/napa)** package, [any-packages](https://github.com/msieurtoph/any-packages) lets NPM install any package, from any given url (or any github  repo), without needing a distant package.json. The package will be available in the `node_modules/` folder.
 
 Note: It also works if the distant package has a package.json. But doing that does not really make sense.
 
