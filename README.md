@@ -16,6 +16,8 @@ Note: It also works if the distant package has a package.json. But doing that do
 
 ### Usage
 
+#### package.json mode (recommended)
+
 Add this to your package.json and run `npm install`: 
 ```javascript
 "scripts": {
@@ -54,11 +56,11 @@ Supported urls:
 }
 ```
 
-But also in command-line mode:
+#### command-line mode
 
 `bin/any-package [options] <package_archive_url>:<package_name> <package_archive_url2>:<package_name2> ...`
 
-or in scripting mode:
+#### scripting mode
 
 ```javascript
 var any = require('any-packages'),
@@ -102,7 +104,7 @@ In scripting mode:
 
 ### The callback function
 
-The callback function could only be used in the script mode. It has only one parameter : an array of Package objects.
+The callback function could only be used in the scripting mode. It has only one parameter : an array of Package objects.
 
 Package object provides this API : 
 
