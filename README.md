@@ -14,6 +14,10 @@ Inspired by the really good **[shama/napa](https://github.com/shama/napa)** pack
 
 Note: It also works if the distant package has a package.json. But doing that does not really make sense.
 
+### Installation
+
+`npm install any-packages`
+
 ### Usage
 
 #### package.json mode (recommended)
