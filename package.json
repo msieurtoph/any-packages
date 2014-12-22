@@ -35,6 +35,7 @@
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-jasmine-node": "^0.2.1",
+    "grunt-jasmine-node-coverage-validation": "0.0.4",
     "grunt-newer": "^0.8.0",
     "jshint-stylish": "^1.0.0",
     "load-grunt-tasks": "^1.0.0",
