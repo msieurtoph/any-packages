@@ -6,5 +6,8 @@ addons:
   code_climate:
     repo_token: f285f0d182f832ffd5922a9444d19a8f00208443eb2d50ac9beda4163904cb89
 
+before_script:
+  - npm install -g codeclimate-test-reporter grunt-cli
+
 after_script:
   - cat ./coverage/lcov.info | codeclimate

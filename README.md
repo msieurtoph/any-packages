@@ -7,7 +7,7 @@ Makes npm install any kind of archives into the `node_modules/` folder. Works al
 
 ### What is any-packages?
 
-Sometimes usefull github repos have no package.json. So NPM cannot install them. 
+Sometimes usefull github repos have no package.json. So NPM cannot install them.
 For instance, https://github.com/angular-ui/bootstrap-bower only provides a bower.json and no package.json. If you do not use bower, you are stuck.
 
 Inspired by the really good **[shama/napa](https://github.com/shama/napa)** package, [any-packages](https://github.com/msieurtoph/any-packages) lets NPM install any package, from any given url (or any github  repo), without needing a distant package.json. The package will be available in the `node_modules/` folder.
@@ -22,18 +22,18 @@ Note: It also works if the distant package has a package.json. But doing that do
 
 #### package.json mode (recommended)
 
-Add this to your package.json and run `npm install`: 
+Add this to your package.json and run `npm install`:
 ```javascript
 "scripts": {
-    "install": "any-package [options] <package_archive_url>:<package_name> <package_archive_url2>:<package_name2> [...]"
+    "install": "any-packages [options] <package_archive_url>:<package_name> <package_archive_url2>:<package_name2> [...]"
 }
 ```
-or better : 
+or better :
 ````javascript
 "scripts": {
-    "install": "any-package [options]"
+    "install": "any-packages [options]"
 },
-"any-package": {
+"any-packages": {
     "<package_name>": "<package_archive_url>",
     "<package_name2>": "<package_archive_url2>",
     "<package_name3>": "<package_archive_url3>",
@@ -43,7 +43,7 @@ or better :
 
 Supported urls:
 ````javascript
-"any-package": {
+"any-packages": {
     // URLS
     "name": "http://domain.com/path/to/archive",
     "name": "http://domain.com:1234/path/to/archive",
@@ -62,7 +62,7 @@ Supported urls:
 
 #### command-line mode
 
-`bin/any-package [options] <package_archive_url>:<package_name> <package_archive_url2>:<package_name2> ...`
+`bin/any-packages [options] <package_archive_url>:<package_name> <package_archive_url2>:<package_name2> ...`
 
 #### scripting mode
 
@@ -101,7 +101,7 @@ In scripting mode:
 {
     cache: true,
     force: false,
-    pkg: false, 
+    pkg: false,
     test: false
 }
 ```
@@ -110,7 +110,7 @@ In scripting mode:
 
 The callback function could only be used in the scripting mode. It has only one parameter : an array of Package objects.
 
-Package object provides this API : 
+Package object provides this API :
 
 * `name`: name of the package,
 * `url`: url used to download the archive,
@@ -131,7 +131,7 @@ var any = require('any-packages'),
         'http://invalid.url/package:invalid_package'
     ],
     opts = {
-        pkg: false 
+        pkg: false
     }
 ;
 
