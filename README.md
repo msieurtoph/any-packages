@@ -1,7 +1,7 @@
 any-packages
 ============
 
-[![Build Status](http://img.shields.io/travis/msieurtoph/any-packages.svg)](https://travis-ci.org/msieurtoph/any-packages) [![Code Climate](https://codeclimate.com/github/msieurtoph/any-packages/badges/gpa.svg)](https://codeclimate.com/github/msieurtoph/any-packages)
+[![Build Status](http://img.shields.io/travis/msieurtoph/any-packages.svg)](https://travis-ci.org/msieurtoph/any-packages) [![Code Climate](https://codeclimate.com/github/msieurtoph/any-packages/badges/gpa.svg)](https://codeclimate.com/github/msieurtoph/any-packages) [![Test Coverage](https://codeclimate.com/github/msieurtoph/any-packages/badges/coverage.svg)](https://codeclimate.com/github/msieurtoph/any-packages)
 
 Makes npm install any kind of archives into the `node_modules/` folder. Works also with github repos.
 
