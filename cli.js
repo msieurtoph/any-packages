@@ -7,7 +7,8 @@ var path = require('path'),
     slash = require('slash'),
     fs = require('fs'),
     cwd = process.cwd(),
-    Package = require('./lib/package')
+    deferred = require('deferred'),
+    pkg = require('./lib/package')
 ;
 
 var options;
@@ -18,20 +19,20 @@ function readDefaultOptions(opts){
 }
 
 function readPackageJSON(){
-    var pkg = path.join(cwd, 'package.json');
-    if (!fs.existsSync(pkg)) {
+    var pkgJson = path.join(cwd, 'package.json');
+    if (!fs.existsSync(pkgJson)) {
         return false;
     }
-    pkg = require(pkg);
-    if (!pkg.hasOwnProperty('any-packages')) {
+    pkgJson = require(pkgJson);
+    if (!pkgJson.hasOwnProperty('any-packages')) {
         return false;
     }
-    return Object.keys(pkg['any-packages']).map(function(key) {
-        return pkg['any-packages'][key]+':'+key;
+    return Object.keys(pkgJson['any-packages']).map(function(key) {
+        return pkgJson['any-packages'][key]+':'+key;
     });
 }
 
-function setPackage(arg){
+function parseArg(arg){
     var parsed = url(arg),
         parsedTmp, name, version, type;
 
@@ -60,21 +61,25 @@ function setPackage(arg){
     }
 
     //set full github url if there is no parsed.hostname
-    if ('' === parsed.hostname){
+    if ('' === parsed.protocol){
+        parsed.set('pathname', slash(path.join('/', parsed.hostname, parsed.pathname, 'archive', (version || 'master') + (process.platform === 'win32' ? '.zip' : '.tar.gz' ))));
         parsed.set('host', 'github.com');
         parsed.set('hostname', 'github.com');
         parsed.set('protocol', 'https:');
-        parsed.set('pathname', slash(path.join('/', parsed.pathname, 'archive', (version || 'master') + (process.platform === 'win32' ? '.zip' : '.tar.gz' ))));
     }
 
-    return new Package(name, parsed.toString(), version);
+    return {
+        name: name,
+        url: parsed.href,
+        version: version
+    };
 }
 
-function run(args, opts, callback){
+function run(packages, opts, callback){
 
     // params :
-    if (!util.isArray(args)) {
-        args = 'string' === typeof args ? args.split(' ') : [];
+    if (!util.isArray(packages)) {
+        packages = 'string' === typeof packages ? packages.split(' ') : [];
     }
     options = readDefaultOptions(opts);
     if ('function' !== typeof callback){
@@ -83,37 +88,52 @@ function run(args, opts, callback){
 
     // read package.json
     if (options.pkg) {
-        var pkg = readPackageJSON();
-        if (pkg) {
-            args = args.concat(pkg);
+        var pkgJson = readPackageJSON();
+        if (pkgJson) {
+            packages = packages.concat(pkgJson);
         }
     }
+
+    // install each package
+    if (packages.length){
+        deferred.map(packages, function(arg){
+            return pkg.install(parseArg(arg), options);
+        }).then(function(pkgList){
+            callback(pkgList);
+        }, function(err){
+            callback([]);
+        });
+        // .cb(callback);
+    } else {
+        callback([]);
+    }
+
 
     // set list of Package objects
-    var pkgList = args.map(setPackage);
+    // var pkgList = args.map(setPackage);
 
-    var count = 0;
-    function close() {
-        if (--count < 1) {
-            callback(pkgList);
-        }
-    }
+    // var count = 0;
+    // function close() {
+    //     if (--count < 1) {
+    //         callback(pkgList);
+    //     }
+    // }
 
-    // install each of them
-    pkgList.forEach(function(pkg) {
-        ++count;
-        pkg.install(close, options);
-    });
+    // // install each of them
+    // pkgList.forEach(function(pkgJson) {
+    //     ++count;
+    //     pkgJson.install(close, options);
+    // });
 
-    if (count < 1) {
-        callback(pkgList);
-    }
+    // if (count < 1) {
+    //     callback(pkgList);
+    // }
 }
 
 module.exports = {
     run: run,
     readDefaultOptions: readDefaultOptions,
     readPackageJSON: readPackageJSON,
-    setPackage: setPackage
+    parseArg: parseArg
 };
 
