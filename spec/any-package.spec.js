@@ -182,7 +182,6 @@ describe('any.run function', function(){
         any.run(null, null, function(pkgList){
             expect(pkgList.length).toBe(pkgCount);
             pkgList.map(function(pkg){
-                console.log('Pkg:', pkg.name, pkg.url, pkg.installed, pkg.name.indexOf('invalid'))
                 expect(pkg.installed).toBe(-1 === pkg.name.indexOf('invalid'));
             });
             clearTimeout(timer);
