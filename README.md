@@ -1,6 +1,6 @@
 any-packages
 ============
-
+[![npm version](https://badge.fury.io/js/any-packages.svg)](http://badge.fury.io/js/any-packages)
 [![Build Status](http://img.shields.io/travis/msieurtoph/any-packages.svg)](https://travis-ci.org/msieurtoph/any-packages) [![Code Climate](https://codeclimate.com/github/msieurtoph/any-packages/badges/gpa.svg)](https://codeclimate.com/github/msieurtoph/any-packages) [![Test Coverage](https://codeclimate.com/github/msieurtoph/any-packages/badges/coverage.svg)](https://codeclimate.com/github/msieurtoph/any-packages)
 
 [![dependency Status](http://img.shields.io/david/msieurtoph/any-packages.svg?style=flat)](https://david-dm.org/msieurtoph/any-packages#info=dependencies) [![devDependency Status](http://img.shields.io/david/dev/msieurtoph/any-packages.svg?style=flat)](https://david-dm.org/msieurtoph/any-packages#info=devDependencies)
@@ -97,7 +97,7 @@ any.run(args, opts, callback);
 
 * `--cache / --no-cache` : use cache (if present) or not. _Default: `--cache / true`_
 * `--force / --no-force` : force download or not, even if the package is already present in cache. _Default: `--no-force / false`_
-* `--pkg / --no-pkg` : use the package.json configuration or not. Useless in package.json usage, but usefull in scripting mode or in command-line. If `false`, the `any-packages` property of the package.json is ignored and the only the passed arguments will be used. _Default: `--pkg / true`_
+* `--pkg / --no-pkg` : use the package.json configuration or not. Useless in package.json usage, but usefull in scripting mode or in command-line. If `false`, the `any-packages` property of the package.json is ignored and only the passed arguments will be used. _Default: `--pkg / true`_
 * `--test / --no-test` : download and write to disk or not. If `true`, it by-pass the real download phase, processing only outputs. _Default: `--no-test / false`_
 
 In scripting mode:
