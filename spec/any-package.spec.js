@@ -198,28 +198,28 @@ describe('Package library', function(){
         myPkg
     ;
 
-    function clean(done){
+    function clean(pkg, done){
         if (!done) {
             done = function(){};
         }
-        rimraf(myPkg.installTo, function(){
-            rimraf(myPkg.cacheTo, done);
+        rimraf(pkg.installTo, function(){
+            rimraf(pkg.cacheTo, done);
         });
     }
 
-    myPkg = {
-        name: 'any-packages-package-object-test',
-        url: url1,
-        version: undefined
-    };
-    pkg.setPkg(myPkg);
 
     it('should clean directories', function(done){
-        clean(function(){
+        myPkg = {
+            name: 'any-packages-package-object-test',
+            url: url1,
+            version: undefined
+        };
+        pkg.setPkg(myPkg);
+        clean(myPkg, function(){
             myPkg.url = url2;
             expect(myPkg.installed).toBe(false);
             expect(myPkg.cached).toBe(false);
-            clean(function(){
+            clean(myPkg, function(){
                 myPkg.url = url1;
                 expect(myPkg.installed).toBe(false);
                 expect(myPkg.cached).toBe(false);
@@ -237,65 +237,100 @@ describe('Package library', function(){
         },{
             cache: true
         }).then(function(pkg){
-            console.log('PKG:', pkg);
             expect(pkg.installed).toBe(true);
             expect(pkg.cached).toBe(true);
             expect(pkg.installMethod).toBe('download');
             done();
+        }, function(err){
+            // automatically make the test fail (error cannot be undefined)
+            expect(err).toBeUndefined();
+            done();
         });
     });
 
-    // it('should use cache', function(done){
-    //     pkg.install(function(err){
-    //         expect(err).toBeUndefined();
-    //         expect(pkg.installed).toBe(true);
-    //         expect(pkg.cached).toBe(true);
-    //         expect(pkg.installMethod).toBe('cache');
-    //         done();
-    //     },{
-    //         cache: true
-    //     });
-    // });
+    it('should use cache', function(done){
+        pkg.install({
+            name: 'any-packages-package-object-test',
+            url: url1,
+            version: undefined
+        },{
+            cache: true
+        }).then(function(pkg){
+            expect(pkg.installed).toBe(true);
+            expect(pkg.cached).toBe(true);
+            expect(pkg.installMethod).toBe('cache');
+            done();
+        }, function(err){
+            // automatically make the test fail (error cannot be undefined)
+            expect(err).toBeUndefined();
+            done();
+        });
+    });
 
-    // it('should not use cache if asked', function(done){
-    //     pkg.install(function(err){
-    //         expect(err).toBeUndefined();
-    //         expect(pkg.installed).toBe(true);
-    //         expect(pkg.cached).toBe(false);
-    //         expect(pkg.installMethod).toBe('download');
-    //         done();
-    //     },{
-    //         cache: false
-    //     });
-    // });
+    it('should not use cache if asked', function(done){
+        pkg.install({
+            name: 'any-packages-package-object-test',
+            url: url1,
+            version: undefined
+        },{
+            cache: false
+        }).then(function(pkg){
+            expect(pkg.installed).toBe(true);
+            expect(pkg.cached).toBe(false);
+            expect(pkg.installMethod).toBe('download');
+            done();
+        }, function(err){
+            // automatically make the test fail (error cannot be undefined)
+            expect(err).toBeUndefined();
+            done();
+        });
+    });
 
-    // it('should force download if asked', function(done){
-    //     pkg.install(function(err){
-    //         expect(err).toBeUndefined();
-    //         expect(pkg.installed).toBe(true);
-    //         expect(pkg.cached).toBe(true);
-    //         expect(pkg.installMethod).toBe('download');
-    //         done();
-    //     },{
-    //         cache: true,
-    //         force: true
-    //     });
-    // });
+    it('should force download if asked', function(done){
+        pkg.install({
+            name: 'any-packages-package-object-test',
+            url: url1,
+            version: undefined
+        },{
+            cache: true,
+            force: true
+        }).then(function(pkg){
+            expect(pkg.installed).toBe(true);
+            expect(pkg.cached).toBe(true);
+            expect(pkg.installMethod).toBe('download');
+            done();
+        }, function(err){
+            // automatically make the test fail (error cannot be undefined)
+            expect(err).toBeUndefined();
+            done();
+        });
+    });
 
-    // it('should download if url differs', function(done){
-    //     pkg.url = url2;
+    it('should download if url differs', function(done){
+        pkg.install({
+            name: 'any-packages-package-object-test',
+            url: url2,
+            version: undefined
+        },{
+            cache: true
+        }).then(function(pkg){
+            expect(pkg.installed).toBe(true);
+            expect(pkg.cached).toBe(true);
+            expect(pkg.installMethod).toBe('download');
+            done();
+        }, function(err){
+            // automatically make the test fail (error cannot be undefined)
+            expect(err).toBeUndefined();
+            done();
+        });
+    });
 
-    //     pkg.install(function(err){
-    //         expect(err).toBeUndefined();
-    //         expect(pkg.installed).toBe(true);
-    //         expect(pkg.cached).toBe(true);
-    //         expect(pkg.installMethod).toBe('download');
-    //         done();
-    //     },{
-    //         cache: true
-    //     });
-    // });
-
-    // clean();
+    myPkg = {
+        name: 'any-packages-package-object-test',
+        url: url1,
+        version: undefined
+    };
+    pkg.setPkg(myPkg);
+    clean(myPkg);
 
 });
