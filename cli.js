@@ -8,7 +8,8 @@ var path = require('path'),
     fs = require('fs'),
     cwd = process.cwd(),
     deferred = require('deferred'),
-    pkg = require('./lib/package')
+    pkg = require('./lib/package'),
+    validUrl = require('valid-url')
 ;
 
 var options;
@@ -34,7 +35,7 @@ function readPackageJSON(){
 
 function parseArg(arg){
 
-    if (!arg.match(/[^\/]+\/[^\/]+/)) {
+    if (!validUrl.isUri(arg) && !arg.match(/^[^\/]+\/[^\/]+$/)) {
         return {
             valid: false,
             name: arg
@@ -48,7 +49,7 @@ function parseArg(arg){
     // get name and version in parsed.hash (if version is provided)
 
     if ('' !== parsed.hash) {
-        parsedTmp = parsed.hash.match(/(.*):(.*)/);
+        parsedTmp = parsed.hash.match(/^(.*):(.*)$/);
         if (parsedTmp) {
             name = parsedTmp[2];
             version = parsedTmp[1].slice(1);
@@ -58,7 +59,7 @@ function parseArg(arg){
         parsed.set('hash', '');
     // else, get name in parsed.pathname
     } else {
-        parsedTmp = parsed.pathname.match(/(.*):(.*)/);
+        parsedTmp = parsed.pathname.match(/^(.*):(.*)$/);
         if (parsedTmp) {
             name = parsedTmp[2];
             parsed.set('pathname', parsedTmp[1]);

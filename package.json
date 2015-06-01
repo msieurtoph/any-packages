@@ -50,7 +50,8 @@
     "rimraf": "^2.2.8",
     "slash": "^1.0.0",
     "tar-pack": "^2.0.0",
-    "url-parse": "^1.0.1"
+    "url-parse": "^1.0.1",
+    "valid-url": "^1.0.9"
   },
   "any-packages": {
     "invalid": "user/repo",
