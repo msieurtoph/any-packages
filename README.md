@@ -49,17 +49,17 @@ Supported urls:
 ````javascript
 "any-packages": {
     // URLS
-    "name": "http://domain.com/path/to/archive",
-    "name": "http://domain.com:1234/path/to/archive",
-    "name": "https://domain.com/path/to/archive",
-    "name": "https://domain.com:1234/path/to/archive",
+    "<name>": "http://domain.com/path/to/archive",
+    "<name>": "http://domain.com:1234/path/to/archive",
+    "<name>": "https://domain.com/path/to/archive",
+    "<name>": "https://domain.com:1234/path/to/archive",
     ...
     // github repos
-    "repo": "user/repo",
-    "repo": "user/repo#0.1.2",
-    "repo": "https://github.com/user/repo",
-    "repo": "https://github.com/user/repo/archive/0.1.2.zip",
-    "repo": "https://github.com/user/repo/archive/0.1.2.tgz"
+    "<repo>": "user/repo",
+    "<repo>": "user/repo#0.1.2",
+    "<repo>": "https://github.com/user/repo",
+    "<repo>": "https://github.com/user/repo/archive/0.1.2.zip",
+    "<repo>": "https://github.com/user/repo/archive/0.1.2.tgz"
     ...
 }
 ```
@@ -153,7 +153,7 @@ function callback(pkgList){
 
 any.run(args, opts, callback);
 ```
-This should give:
+This should give something close to:
 ```
 info downloading http://invalid.url/package into invalid_package
 ERR! Specify a valid URL
