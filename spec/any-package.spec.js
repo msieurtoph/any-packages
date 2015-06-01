@@ -2,7 +2,7 @@
 
 var any = require('../cli.js'),
     defaultOpts = require('../config.js'),
-    pkg = require('../lib/package'),
+    pkg = require('../lib/package.js'),
     rimraf = require('rimraf')
 ;
 
@@ -20,35 +20,7 @@ describe('any.readDefaultOptions function', function(){
         expect(opts.pkg).toBe(false);
     });
 
-/*    it('should return args as an array', function(){
-        opts = any.readDefaultOptions('foobar barfoo'.split(' '));
-        expect(opts).toEqual(defaultOpts);
-        expect(config.args).toEqual(['foobar', 'barfoo']);
-    });
-
-    it('should deal with mixed args and options', function(){
-        config = any.readDefaultOptions('--no-cache foobar --force barfoo'.split(' '));
-        expect(config.opts.cache).toBe(false);
-        expect(config.opts.force).toBe(true);
-        expect(config.args).toEqual(['foobar', 'barfoo']);
-    });
-
-    it('should deal with all kind of options', function(){
-        config = any.readDefaultOptions('--no-cache --force --no-pkg --unknown-option'.split(' '));
-        expect(config.opts.cache).toBe(false);
-        expect(config.opts.force).toBe(true);
-        expect(config.opts.pkg).toBe(false);
-        expect(config.opts['unknown-option']).toBe(true);
-        expect(config.opts.invalidOption).toBeUndefined();
-
-        config = any.readDefaultOptions('-C -f -P -u'.split(' '));
-        expect(config.opts.cache).toBe(false);
-        expect(config.opts.force).toBe(true);
-        expect(config.opts.pkg).toBe(false);
-        expect(config.opts.u).toBe(true);
-        expect(config.opts.i).toBeUndefined();
-    });
-*/});
+});
 
 describe('any.readPackageJSON function', function(){
 
@@ -161,15 +133,40 @@ describe('any.run function', function(){
         });
     });
 
+    it('should parse string\'ed packages', function(done){
+        any.run('unshiftio/url-parse:foo unshiftio/url-parse#0.2.1:bar', {pkg:false}, function(pkgList){
+            expect(pkgList.length).toBe(2);
+            pkgList.map(function(pkg){
+                expect(pkg.valid).toBe(true);
+            });
+            done();
+        });
+    });
+
+    it('should not try to install args', function(done){
+        any.run('foo bar baz', {pkg:false}, function(pkgList){
+            expect(pkgList.length).toBe(3);
+            pkgList.map(function(pkg){
+                expect(pkg.valid).toBe(false);
+            });
+            done();
+        });
+    });
+
+    pkg.clearCache();
+
     it('should run in test mode', function(done){
         any.run(null, {test:true}, function(pkgList){
             expect(pkgList.length).toBe(pkgCount);
             pkgList.map(function(pkg){
+                expect(pkg.valid).toBe(true);
                 expect(pkg.installed).toBe(false);
             });
             done();
         });
     });
+
+    pkg.clearCache();
 
     it('should run in prod mode (timeout = 5s)', function(done){
 
@@ -182,6 +179,7 @@ describe('any.run function', function(){
         any.run(null, null, function(pkgList){
             expect(pkgList.length).toBe(pkgCount);
             pkgList.map(function(pkg){
+                expect(pkg.valid).toBe(true);
                 expect(pkg.installed).toBe(-1 === pkg.name.indexOf('invalid'));
             });
             clearTimeout(timer);
@@ -189,7 +187,20 @@ describe('any.run function', function(){
         });
     });
 
+    it('should run in test mode (with previously cached pkg)', function(done){
+        any.run(null, {test:true}, function(pkgList){
+            expect(pkgList.length).toBe(pkgCount);
+            pkgList.map(function(pkg){
+                expect(pkg.valid).toBe(true);
+                expect(pkg.installed).toBe(false);
+            });
+            done();
+        });
+    });
+
 });
+
+
 
 describe('Package library', function(){
 
@@ -208,26 +219,47 @@ describe('Package library', function(){
     }
 
 
-    it('should clean directories', function(done){
-        myPkg = {
+    it('should clear cache', function(done){
+            myPkg = {
             name: 'any-packages-package-object-test',
             url: url1,
             version: undefined
         };
         pkg.setPkg(myPkg);
-        clean(myPkg, function(){
-            myPkg.url = url2;
-            expect(myPkg.installed).toBe(false);
-            expect(myPkg.cached).toBe(false);
-            clean(myPkg, function(){
-                myPkg.url = url1;
-                expect(myPkg.installed).toBe(false);
-                expect(myPkg.cached).toBe(false);
-                done();
-            });
+
+        pkg.clearCache();
+
+        myPkg.url = url2;
+        expect(myPkg.installed).toBe(false);
+        expect(myPkg.cached).toBe(false);
+
+        myPkg.url = url1;
+        expect(myPkg.installed).toBe(false);
+        expect(myPkg.cached).toBe(false);
+
+        done();
+    });
+
+    pkg.clearCache();
+
+    it('should use default options', function(done){
+        pkg.install({
+            name: 'any-packages-package-object-test',
+            url: url1,
+            version: undefined
+        }).then(function(pkg){
+            expect(pkg.installed).toBe(true);
+            expect(pkg.cached).toBe(false);
+            expect(pkg.installMethod).toBe('download');
+            done();
+        }, function(err){
+            // automatically make the test fail (error cannot be undefined)
+            expect(err).toBeUndefined();
+            done();
         });
     });
 
+    pkg.clearCache();
 
     it('should save to cache', function(done){
         pkg.install({
@@ -334,3 +366,4 @@ describe('Package library', function(){
     clean(myPkg);
 
 });
+

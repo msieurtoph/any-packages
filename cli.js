@@ -33,11 +33,20 @@ function readPackageJSON(){
 }
 
 function parseArg(arg){
+
+    if (!arg.match(/[^\/]+\/[^\/]+/)) {
+        return {
+            valid: false,
+            name: arg
+        };
+    }
+
     var parsed = url(arg),
         parsedTmp, name, version, type;
 
     //get module final name and version !
     // get name and version in parsed.hash (if version is provided)
+
     if ('' !== parsed.hash) {
         parsedTmp = parsed.hash.match(/(.*):(.*)/);
         if (parsedTmp) {
@@ -69,6 +78,7 @@ function parseArg(arg){
     }
 
     return {
+        valid: true,
         name: name,
         url: parsed.href,
         version: version
@@ -97,37 +107,21 @@ function run(packages, opts, callback){
     // install each package
     if (packages.length){
         deferred.map(packages, function(arg){
-            return pkg.install(parseArg(arg), options);
+            var parsedArg = parseArg(arg);
+            if (parsedArg.valid){
+                return pkg.install(parsedArg, options);
+            } else {
+                return deferred.resolve(parsedArg);
+            }
         }).then(function(pkgList){
             callback(pkgList);
         }, function(err){
             callback([]);
         });
-        // .cb(callback);
     } else {
         callback([]);
     }
 
-
-    // set list of Package objects
-    // var pkgList = args.map(setPackage);
-
-    // var count = 0;
-    // function close() {
-    //     if (--count < 1) {
-    //         callback(pkgList);
-    //     }
-    // }
-
-    // // install each of them
-    // pkgList.forEach(function(pkgJson) {
-    //     ++count;
-    //     pkgJson.install(close, options);
-    // });
-
-    // if (count < 1) {
-    //     callback(pkgList);
-    // }
 }
 
 module.exports = {

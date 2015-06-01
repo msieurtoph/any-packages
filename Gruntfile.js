@@ -38,29 +38,33 @@ module.exports = function (grunt) {
         ],
         tasks: [
           'newer:jshint:all',
-          'jasmine_nodejs'
+          'jasmine_node'
         ],
       }
     },
 
-    'jasmine_nodejs': {
-      options: {
-            useHelpers: false,
-            stopOnFailure: false,
-            // configure one or more built-in reporters
-            // reporters: {
-            //     console: {
-            //         colors: true,
-            //         cleanStack: 3,       // (0|false)|(1|true)|2|3
-            //         verbosity: 3,        // (0|false)|1|2|(3|true)
-            //         listStyle: 'indent', // "flat"|"indent"
-            //         activity: true
-            //     }
-            // }
-      },
+    'jasmine_node': {
       all: {
-        specs: [
-          'spec/**'
+        options: {
+          showColors: true,
+          useHelpers: true,
+          coverage: {
+            report: [
+              'lcov'
+            ],
+          },
+          forceExit: true,
+          match: '.',
+          matchAll: true,
+          specFolders: ['spec'],
+          extensions: 'js',
+          specNameMatcher: 'spec',
+          captureExceptions: true
+        },
+        src: [
+          'cli.js',
+          'lib/**/*.js',
+          'bin/**/*.js'
         ]
       }
     }
@@ -68,12 +72,12 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('default', [
-    'jshint:all',
     'test'
   ]);
 
   grunt.registerTask('test', [
-    'jasmine_nodejs'
+    'jshint:all',
+    'jasmine_node',
   ]);
 
 
