@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-'use strict';
-
 function splitParams(params){
     var parsedParams = nopt(knownOpts, shortOpts, params || process.argv.slice(2), 0),
         args = parsedParams.argv.remain;

@@ -7,7 +7,7 @@
     "test": "grunt test"
   },
   "bin": {
-    "any-packages": "./bin/any-packages"
+    "any-packages": "bin/any-packages"
   },
   "homepage": "https://github.com/msieurtoph/any-packages",
   "repository": {
