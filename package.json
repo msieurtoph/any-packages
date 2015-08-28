@@ -1,6 +1,6 @@
 {
   "name": "any-packages",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Makes npm install any packages that have no package.json. Works with any github repos or archives.",
   "main": "cli.js",
   "scripts": {
