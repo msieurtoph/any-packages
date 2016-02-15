@@ -59,6 +59,8 @@
     "url-parse2": "unshiftio/url-parse",
     "url-parse3": "unshiftio/url-parse#0.2.1",
     "url-parse4": "http://github.com/unshiftio/url-parse/archive/0.2.2.zip",
+    "url-parse5": "http://github.com/unshiftio/url-parse/archive/0.2.2.zip?foo=bar",
+    "url-parse6": "unshiftio/url-parse?foo=bar#0.2.1",
     "angular-bootstrap": "angular-ui/bootstrap-bower"
   }
 }

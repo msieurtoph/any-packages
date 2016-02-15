@@ -32,6 +32,8 @@ describe('any.readPackageJSON function', function(){
             'unshiftio/url-parse:url-parse2',
             'unshiftio/url-parse#0.2.1:url-parse3',
             'http://github.com/unshiftio/url-parse/archive/0.2.2.zip:url-parse4',
+            'http://github.com/unshiftio/url-parse/archive/0.2.2.zip?foo=bar:url-parse5',
+            'unshiftio/url-parse?foo=bar#0.2.1:url-parse6',
             'angular-ui/bootstrap-bower:angular-bootstrap'
         ]);
     });
@@ -95,6 +97,18 @@ describe('any.parseArg function', function(){
                 name:'custom',
                 url:'http://test.com:1234/my/complex/path/archive.zip',
                 version: undefined
+            },
+            {
+                arg: 'http://test.com:1234/my/complex/path/archive.zip?args=values:custom',
+                name:'custom',
+                url:'http://test.com:1234/my/complex/path/archive.zip?args=values',
+                version: undefined
+            },
+            {
+                arg: 'user/repo?args=value#version:custom',
+                name:'custom',
+                url:'https://github.com/user/repo/archive/version.' + extension + '?args=value',
+                version: 'version'
             }
         ]
     ;
@@ -124,7 +138,7 @@ describe('any.parseArg function', function(){
 
 describe('any.run function', function(){
 
-    var pkgCount = 6;
+    var pkgCount = 8;
 
     it('should not read package.json', function(done){
         any.run(null, {pkg:false}, function(pkgList){

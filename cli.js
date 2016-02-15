@@ -43,11 +43,13 @@ function parseArg(arg){
     }
 
     var parsed = url(arg),
-        parsedTmp, name, version, type;
+        parsedTmp, name, version, query, type;
+
+
 
     //get module final name and version !
-    // get name and version in parsed.hash (if version is provided)
 
+    // get name and version in parsed.hash (if version is provided)
     if ('' !== parsed.hash) {
         parsedTmp = parsed.hash.match(/^(.*):(.*)$/);
         if (parsedTmp) {
@@ -57,6 +59,16 @@ function parseArg(arg){
             version = parsed.hash.slice(1);
         }
         parsed.set('hash', '');
+    // else, get name in parsed.query
+    } else if ('' !== parsed.query) {
+        parsedTmp = parsed.query.match(/^(.*):([^:]*)$/);
+        if (parsedTmp) {
+            name = parsedTmp[2];
+            query = parsedTmp[1].slice(1);
+        } else {
+            query = parsed.hash.slice(1);
+        }
+        parsed.set('query', query);
     // else, get name in parsed.pathname
     } else {
         parsedTmp = parsed.pathname.match(/^(.*):(.*)$/);
